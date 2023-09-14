@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { API_ENDPOINT } from "../../config/constant";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type Inputs = {
   name: string;
@@ -39,11 +39,10 @@ const SignupForm = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">
+          <label className="block text-teal-700 font-semibold mb-2">
             Full Name:
           </label>
           <input
-            placeholder="Enter Name"
             type="text"
             className={`w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue ${
               errors.name ? "border-red-500" : ""
@@ -56,11 +55,10 @@ const SignupForm = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">
+          <label className="block text-teal-700 font-semibold mb-2">
             Email:
           </label>
           <input
-            placeholder="Enter Email"
             type="text"
             className={`w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue ${
               errors.email ? "border-red-500" : ""
@@ -73,11 +71,10 @@ const SignupForm = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-semibold mb-2">
+          <label className="block text-teal-700 font-semibold mb-2">
             Password:
           </label>
           <input
-            placeholder="Enter Password"
             type="password"
             className={`w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline-blue ${
               errors.password ? "border-red-500" : ""
@@ -91,11 +88,17 @@ const SignupForm = () => {
 
         <button
           type="submit"
-          className="w-full bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-gray mt-4"
+          className="w-full bg-teal-500 hover:bg-teal-800 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-gray mt-4"
         >
           Sign up
         </button>
       </form>
+      <p className="text-center mt-4 font-medium text-teal-600">
+        Already having an account!
+        <Link className="ml-2 underline" to="/signin">
+          Sign-in
+        </Link>
+      </p>
     </>
   );
 };
