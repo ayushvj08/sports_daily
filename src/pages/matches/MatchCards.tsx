@@ -33,10 +33,9 @@ const MatchCards = () => {
             key={match.id}
             className="w-72 bg-white rounded-lg shadow-md p-4 mr-4 mb-6 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-110 duration-200"
           >
-            <div className="text-xl font-bold mb-2">
-              Sport: {match.sportName}
-            </div>
-            <div>location: {match.location}</div>
+            <div className="text-xl font-bold mb-2">{match.sportName}</div>
+            <div> {match.location}</div>
+            <br />
             <div className="text-gray-500">{match.name}</div>
           </div>
         ) : null;

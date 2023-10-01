@@ -1,12 +1,13 @@
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import Signin from "../pages/signin";
 import Signup from "../pages/signup/";
 import ProtectedRoute from "./ProtectedRoute";
 import PasswordChange from "../pages/password_change/";
-import Articles from "../pages/articles";
 import ArticleModal from "../pages/articles/ArticleModal";
 import AppBar from "../layout/AppBar";
 import Logout from "../pages/logout";
+import Preferences from "../pages/preferences";
+import Dashboard from "../pages/dashboard";
 
 const router = createBrowserRouter([
   {
@@ -15,17 +16,24 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <AppBar />,
+    element: <Dashboard />,
     children: [
       {
         index: true,
         element: <Navigate to="/home/articles" replace />,
       },
-
       {
         path: "articles",
-        element: <Articles />,
+        element: <Outlet />,
         children: [
+          {
+            path: "preferences",
+            element: (
+              <ProtectedRoute>
+                <Preferences />
+              </ProtectedRoute>
+            ),
+          },
           {
             path: ":articleId",
             children: [{ index: true, element: <ArticleModal /> }],
