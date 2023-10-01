@@ -1,6 +1,7 @@
 import React from "react";
 import { API_ENDPOINT } from "../../config/constant";
-import { ArticleActions } from "./reducer";
+import { ArticleActions, ArticleState } from "./reducer";
+import { Article } from "../types";
 
 export const fetchArticles = async (articleDispatch: React.Dispatch<ArticleActions>) => {
   try {
@@ -51,4 +52,34 @@ export const fetchArticleById = async (id: string) => {
     return { ok: false, error: error };
 
   }
+};
+
+export const getFilteredArticles = (articleState: ArticleState) => {
+  let filteredArticles: Article[] = [];
+  let filteredTeamArticles: Article[] = [];
+
+  const mypreferredSports = JSON.parse(
+    localStorage.getItem("preferences") || ""
+  ).preferences.sports;
+  if (mypreferredSports.length > 0)
+    filteredArticles = articleState.articles.filter((article) => {
+      if (mypreferredSports.includes(article.sport.id)) return article;
+    });
+
+  const mypreferredTeams = JSON.parse(
+    localStorage.getItem("preferences") || ""
+  ).preferences.teams;
+  if (mypreferredTeams.length > 0)
+    filteredTeamArticles = articleState.articles.filter((article) => {
+      if (
+        mypreferredTeams.includes(article.teams[0]?.id) ||
+        mypreferredTeams.includes(article.teams[1]?.id)
+      )
+        return article;
+    });
+
+  filteredTeamArticles.forEach((article) => {
+    if (!filteredArticles.includes(article)) filteredArticles.push(article);
+  });
+  return filteredArticles;
 };
