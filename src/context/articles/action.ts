@@ -1,7 +1,8 @@
 import React from "react";
 import { API_ENDPOINT } from "../../config/constant";
 import { ArticleActions, ArticleState } from "./reducer";
-import { Article } from "../types";
+import { Article, Sport, Team } from "../types";
+import { PreferencesState } from "../preferences/reducer";
 
 export const fetchArticles = async (articleDispatch: React.Dispatch<ArticleActions>) => {
   try {
@@ -54,26 +55,41 @@ export const fetchArticleById = async (id: string) => {
   }
 };
 
-export const getFilteredArticles = (articleState: ArticleState) => {
+export const fetchSports = async () => {
+  try {
+    const response = await fetch(`${API_ENDPOINT}/sports`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return { data, ok: true }
+  } catch (error) {
+    console.log(error);
+    return { ok: false, error }
+  }
+};
+
+
+
+export const getFilteredArticles = (articleState: ArticleState, preferencesState: PreferencesState) => {
   let filteredArticles: Article[] = [];
   let filteredTeamArticles: Article[] = [];
-
-  const mypreferredSports = JSON.parse(
-    localStorage.getItem("preferences") || ""
-  ).preferences.sports;
-  if (mypreferredSports.length > 0)
+  // console.log(preferencesState.preferences.sports, preferencesState.preferences.teams)
+  const mypreferredSports = preferencesState.preferences.sports
+  // if (mypreferredSports.length > 0)
     filteredArticles = articleState.articles.filter((article) => {
-      if (mypreferredSports.includes(article.sport.id)) return article;
+
+      if (mypreferredSports.some((e: Sport) => e.id === article.sport.id)) return article;
     });
 
-  const mypreferredTeams = JSON.parse(
-    localStorage.getItem("preferences") || ""
-  ).preferences.teams;
-  if (mypreferredTeams.length > 0)
+  const mypreferredTeams = preferencesState.preferences.teams;
+  // if (mypreferredTeams.length > 0)
     filteredTeamArticles = articleState.articles.filter((article) => {
       if (
-        mypreferredTeams.includes(article.teams[0]?.id) ||
-        mypreferredTeams.includes(article.teams[1]?.id)
+        mypreferredTeams.some((e: Team) => e.id === article.teams[0]?.id) ||
+        mypreferredTeams.some((e: Team) => e.id === article.teams[1]?.id)
       )
         return article;
     });

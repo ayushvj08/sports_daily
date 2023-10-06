@@ -1,7 +1,6 @@
 import React from "react";
 import { API_ENDPOINT } from "../../config/constant";
-import { formState } from "../../pages/preferences/PreferencesForm";
-import { Actions } from "./reducer";
+import { Actions, Preferences } from "./reducer";
 
 export const fetchPreferences = async (preferencesDispatch: React.Dispatch<Actions>) => {
   const token = localStorage.getItem("authToken")
@@ -17,9 +16,10 @@ export const fetchPreferences = async (preferencesDispatch: React.Dispatch<Actio
       },
     });
     const responseData = await response.json();
+    const preferences = { sports: responseData.preferences.sports, teams: responseData.preferences.teams }
     preferencesDispatch({
       type: "FETCH_PREFERENCES_SUCCESS",
-      payload: responseData.preferences,
+      payload: preferences,
     });
     localStorage.setItem("preferences", JSON.stringify(responseData))
   } catch (error) {
@@ -31,7 +31,7 @@ export const fetchPreferences = async (preferencesDispatch: React.Dispatch<Actio
   }
 };
 
-export const updatePreferences = async (preferencesDispatch: React.Dispatch<Actions>, responseBody: formState) => {
+export const updatePreferences = async (preferencesDispatch: React.Dispatch<Actions>, formBody: { preferences: Preferences }) => {
   const token = localStorage.getItem("authToken")
   try {
     const response = await fetch(`${API_ENDPOINT}/user/preferences`, {
@@ -40,7 +40,7 @@ export const updatePreferences = async (preferencesDispatch: React.Dispatch<Acti
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(responseBody),
+      body: JSON.stringify(formBody),
     });
     const data = await response.json();
     preferencesDispatch({ type: "UPDATE_PREFERENCES_SUCCESS", payload: data.preferences });
@@ -53,21 +53,6 @@ export const updatePreferences = async (preferencesDispatch: React.Dispatch<Acti
   }
 };
 
-export const fetchSports = async () => {
-  try {
-    const response = await fetch(`${API_ENDPOINT}/sports`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    return { data, ok: true }
-  } catch (error) {
-    console.log(error);
-    return { ok: false, error }
-  }
-};
 export const fetchTeams = async () => {
   try {
     const response = await fetch(`${API_ENDPOINT}/teams`, {

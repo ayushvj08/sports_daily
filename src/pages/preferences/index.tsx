@@ -1,4 +1,3 @@
-// import { fetchSports, fetchTeams } from "../../context/preferences/action";
 // import { useContext, useEffect } from "react";
 // import { fetchPreferences } from "../../context/preferences/action";
 // import { PreferencesContext } from "../../context/preferences/context";

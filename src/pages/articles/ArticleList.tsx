@@ -1,10 +1,6 @@
 import { useContext } from "react";
-export type Sport = {
-  id: 5;
-  name: "Table Tennis";
-};
 import ArticleCard from "./ArticleCard";
-import { Article } from "../../context/types";
+import { Article, Sport } from "../../context/types";
 import { ArticleContext } from "../../context/articles/context";
 
 const ArticleList = (props: { sport: Sport }) => {

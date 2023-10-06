@@ -1,7 +1,8 @@
 import React, { createContext, useReducer } from "react";
 import { Actions, PreferencesState, preferencesReducer } from "./reducer";
+import { Sport, Team } from "../types";
 const initialState = {
-  preferences: { sports: [0], teams: [0] },
+  preferences: { sports: [] as Sport[], teams: [] as Team[] },
   isLoading: false,
   isError: false,
   errorMessage: "",

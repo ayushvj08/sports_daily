@@ -2,62 +2,23 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import {
-  fetchSports,
   fetchTeams,
   updatePreferences,
 } from "../../context/preferences/action";
 import { PreferencesContext } from "../../context/preferences/context";
-type Sport = {
-  id: number;
-  name: string;
-};
-type Team = {
-  id: number;
-  name: string;
-  plays: string;
-};
+import { Sport, Team } from "../../context/types";
+import { fetchSports } from "../../context/articles/action";
 
-export type formState = {
-  preferences: { sports: number[]; teams: number[] };
-};
 const PreferencesForm = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
 
   const { preferencesState, preferencesDispatch } =
     useContext(PreferencesContext);
-  const handleInputChange = (
-    type: "UPDATE_SPORT_PREFERENCES" | "UPDATE_TEAM_PREFERENCES",
-    id: number
-  ) => preferencesDispatch({ type, payload: { id } });
-  // const handleSportsChange = (checked: boolean, id: number) => {
-  //   preferencesDispatch({
-  //     type: "UPDATE_SPORT_PREFERENCES",
-  //     payload: { id: id },
-  //   });
-  // if (checked)
-  // setState({
-  //   preferences: {
-  //     sports: [...state.preferences.sports, id],
-  //     teams: [...state.preferences.teams],
-  //   },
-  // });
-  // else
-
-  // setState({
-  //   ...state,
-  //   preferences: {
-  //     sports: state.preferences.sports.filter((e) => e !== id),
-  //     teams: [...state.preferences.teams],
-  //   },
-  // });
-  // };
-  // const handleTeamsChange = (checked: boolean, id: number) => {
-  //   preferencesDispatch({
-  //     type: "UPDATE_TEAM_PREFERENCES",
-  //     payload: { id: id },
-  //   });
-  // };
+  // const handleInputChange = (
+  //   type: "UPDATE_SPORT_PREFERENCES" | "UPDATE_TEAM_PREFERENCES",
+  //   id: number
+  // ) => preferencesDispatch({ type, payload: { id } });
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
@@ -121,7 +82,7 @@ const PreferencesForm = () => {
                   <section>
                     <hr />
                     {/* <div className="mt-4 h-[300px] overflow-y-auto"> */}
-                    {/* {article?.content} */}
+
                     <p className="text-xl font-semibold my-2">Sports</p>
                     <form onSubmit={handleSubmit}>
                       <div className="flex flex-wrap gap-6 items-center mb-2">
@@ -134,8 +95,8 @@ const PreferencesForm = () => {
                                 <input
                                   id={`${sport.id}-${sport.name}`}
                                   name={sport.name}
-                                  checked={preferencesState.preferences.sports.includes(
-                                    sport.id
+                                  checked={preferencesState.preferences.sports.some(
+                                    (e) => e.id === sport.id
                                   )}
                                   // {...() =>
                                   //   `${
@@ -146,10 +107,14 @@ const PreferencesForm = () => {
                                   //       : undefined
                                   //   }`}
                                   onChange={() => {
-                                    handleInputChange(
-                                      "UPDATE_SPORT_PREFERENCES",
-                                      sport.id
-                                    );
+                                    preferencesDispatch({
+                                      type: "UPDATE_SPORT_PREFERENCES",
+                                      payload: { sport },
+                                    });
+                                    // handleInputChange(
+                                    //   "UPDATE_SPORT_PREFERENCES",
+                                    //   sport.id
+                                    // );
                                   }}
                                   type="checkbox"
                                 />
@@ -177,14 +142,19 @@ const PreferencesForm = () => {
                                 <input
                                   id={`${team.id}-${team.name}`}
                                   name={team.name}
-                                  checked={preferencesState.preferences.teams.includes(
-                                    team.id
+                                  checked={preferencesState.preferences.teams.some(
+                                    (e) => e.id === team.id
                                   )}
-                                  onChange={() =>
-                                    handleInputChange(
-                                      "UPDATE_TEAM_PREFERENCES",
-                                      team.id
-                                    )
+                                  onChange={
+                                    () =>
+                                      preferencesDispatch({
+                                        type: "UPDATE_TEAM_PREFERENCES",
+                                        payload: { team },
+                                      })
+                                    // handleInputChange(
+                                    //   "UPDATE_TEAM_PREFERENCES",
+                                    //   team.id
+                                    // )
                                   }
                                   type="checkbox"
                                 />
@@ -217,16 +187,6 @@ const PreferencesForm = () => {
                     </form>
                     {/* </div> */}
                   </section>
-
-                  {/* <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
-                    >
-                      Close!
-                    </button>
-                  </div> */}
                 </Dialog.Panel>
               </Transition.Child>
             </div>
