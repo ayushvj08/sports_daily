@@ -16,12 +16,15 @@ export const fetchPreferences = async (preferencesDispatch: React.Dispatch<Actio
       },
     });
     const responseData = await response.json();
-    const preferences = { sports: responseData.preferences?.sports, teams: responseData.preferences?.teams }
-    preferencesDispatch({
-      type: "FETCH_PREFERENCES_SUCCESS",
-      payload: preferences,
-    });
-    localStorage.setItem("preferences", JSON.stringify(responseData))
+    if (response.ok){
+      const preferences = { sports: responseData.preferences?.sports, teams: responseData.preferences?.teams }
+      preferencesDispatch({
+        type: "FETCH_PREFERENCES_SUCCESS",
+        payload: preferences,
+      });
+      localStorage.setItem("preferences", JSON.stringify(responseData))
+    }
+
   } catch (error) {
     console.log(error);
     preferencesDispatch({
