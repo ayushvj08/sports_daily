@@ -31,7 +31,7 @@ const ArticleCard = (props: { article: Article }) => {
           <section className="sm:flex-end w-full sm:w-1/3">
             <Link className="font-semibold" to={`articles/${props.article.id}`}>
               <img
-                className="max-h-48 sm:rounded-r-lg"
+                className="max-h-56 max-w-48 sm:rounded-r-lg"
                 width={500}
                 src={props.article.thumbnail}
               />

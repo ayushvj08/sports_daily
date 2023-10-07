@@ -16,7 +16,7 @@ export const fetchPreferences = async (preferencesDispatch: React.Dispatch<Actio
       },
     });
     const responseData = await response.json();
-    const preferences = { sports: responseData.preferences.sports, teams: responseData.preferences.teams }
+    const preferences = { sports: responseData.preferences?.sports, teams: responseData.preferences?.teams }
     preferencesDispatch({
       type: "FETCH_PREFERENCES_SUCCESS",
       payload: preferences,

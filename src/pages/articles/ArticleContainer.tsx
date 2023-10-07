@@ -27,15 +27,13 @@ const ArticleContainer = () => {
   };
 
   return (
-    <div className="sm:w-3/4">
+    <div className="sm:w-3/4 mx-auto">
       <Tab.Group>
-        <Tab.List>
-          {hasSetPreferences ? (
-            <Tab className="mr-4 mb-2">Your News</Tab>
-          ) : null}
+        <Tab.List className="flex flex-wrap gap-6 mb-3">
+          {hasSetPreferences ? <Tab className="">Your News</Tab> : null}
 
           {sports.map((sport: Sport) => (
-            <Tab className="mr-4 mb-2" key={sport.id}>
+            <Tab className="" key={sport.id}>
               {sport.name}
             </Tab>
           ))}
@@ -44,7 +42,7 @@ const ArticleContainer = () => {
         <Tab.Panels>
           {hasSetPreferences ? (
             <Tab.Panel>
-              <div className="mr-4">
+              <div className="mr-8">
                 {getFilteredArticles(articleState, preferencesState).map(
                   (article) => {
                     return <ArticleCard key={article.id} article={article} />;

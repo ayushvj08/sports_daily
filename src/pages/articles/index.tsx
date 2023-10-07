@@ -12,16 +12,17 @@ const Articles: React.FC = () => {
   const { preferencesDispatch } = useContext(PreferencesContext);
 
   useEffect(() => {
-    fetchPreferences(preferencesDispatch);
     fetchArticles(articleDispatch);
-  }, []);
+    fetchPreferences(preferencesDispatch);
+  }, [articleDispatch, preferencesDispatch]);
 
   return (
     <div className="bg-gray-200">
-      <div className="max-w-7xl pt-6 mx-auto">
-        <p className="text-3xl font-semibold my-2">Live Now</p>
+      <div className="max-w-7xl mx-auto pl-4">
+        <p className="text-3xl font-semibold pt-4 mb-3">Live Scores</p>
         <MatchCards />
-        <p className="text-3xl font-semibold my-2">Trending News</p>
+
+        <p className="text-3xl font-semibold my-3">Trending News</p>
         <div className="flex flex-row flex-wrap justify-between">
           <ArticleContainer />
           <Favourite />

@@ -18,9 +18,9 @@ const FavouriteForm = () => {
     });
   }, [state, preferencesDispatch]);
 
-  const favSports = JSON.parse(localStorage.getItem("preferences") || "")
+  const favSports = JSON.parse(localStorage.getItem("preferences") || "[]")
     .preferences.sports;
-  const favTeams = JSON.parse(localStorage.getItem("preferences") || "")
+  const favTeams = JSON.parse(localStorage.getItem("preferences") || "[]")
     .preferences.teams;
 
   // const formChange = async () => {
@@ -32,9 +32,9 @@ const FavouriteForm = () => {
   // };
 
   return (
-    <form className="">
+    <form className="ml-2">
       <select
-        className="text-gray-500 my-1 rounded"
+        className="text-gray-500 block my-1 rounded"
         name="favSports"
         onChange={(e) => {
           setState((state) => ({
@@ -43,7 +43,9 @@ const FavouriteForm = () => {
           }));
         }}
       >
-        <option key={"55"}>-- Select Your Favoutite Sport --</option>
+        <option key={"55"} value={`{}`}>
+          -- Select --
+        </option>
         {favSports.map((fs: Sport) => {
           return (
             <option value={JSON.stringify(fs)} className="" key={fs.id}>
@@ -59,7 +61,9 @@ const FavouriteForm = () => {
           setState((state) => ({ ...state, team: JSON.parse(e.target.value) }))
         }
       >
-        <option key={"sd"}>-- Select Your Favoutite Team --</option>
+        <option key={"sd"} value={`{}`}>
+          -- Select --
+        </option>
         {favTeams.map((ft: Team) => (
           <option value={JSON.stringify(ft)} key={ft.id}>
             {ft.name}
