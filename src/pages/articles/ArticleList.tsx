@@ -32,20 +32,19 @@ const ArticleList = (props: { sport: Sport }) => {
     );
   }
 
-  const getFilteredArticles = () => {
+  const filterArticles = () => {
     return articleState.articles.filter(
-      (article: Article) =>
-        JSON.stringify(article.sport) === JSON.stringify(props.sport)
+      (article: Article) => article.sport.id === props.sport.id
     );
   };
   return (
     <div className="mr-4">
-      {getFilteredArticles().length === 0 ? (
+      {filterArticles().length === 0 ? (
         <div className="bg-white rounded-lg p-1 mb-4 mr-2">
           No Articles Found!
         </div>
       ) : (
-        getFilteredArticles().map((article) => (
+        filterArticles().map((article) => (
           <ArticleCard key={article.id} article={article} />
         ))
       )}

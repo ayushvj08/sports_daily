@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Sport, Team } from "../../context/types";
 import { PreferencesContext } from "../../context/preferences/context";
 
@@ -10,24 +10,38 @@ const FavouriteForm = () => {
   const { preferencesDispatch } = useContext(PreferencesContext);
   const [state, setState] = useState(initialState);
 
-  const favSports = JSON.parse(localStorage.getItem("preferences") || "")
-    .preferences.sports;
-  const favTeams = JSON.parse(localStorage.getItem("preferences") || "")
-    .preferences.teams;
-  const formChange = async () => {
+  useEffect(() => {
+    // console.log(state);
     preferencesDispatch({
       type: "FETCH_PREFERENCES_SUCCESS",
       payload: { sports: [state.sport], teams: [state.team] },
     });
-    console.log(state);
-  };
+  }, [state, preferencesDispatch]);
+
+  const favSports = JSON.parse(localStorage.getItem("preferences") || "")
+    .preferences.sports;
+  const favTeams = JSON.parse(localStorage.getItem("preferences") || "")
+    .preferences.teams;
+
+  // const formChange = async () => {
+  //   console.log(state);
+  //   preferencesDispatch({
+  //     type: "FETCH_PREFERENCES_SUCCESS",
+  //     payload: { sports: [state.sport], teams: [state.team] },
+  //   });
+  // };
+
   return (
-    <form className="" onChange={formChange}>
+    <form className="">
       <select
         className="text-gray-500 my-1 rounded"
-        onChange={(e) =>
-          setState({ ...state, sport: JSON.parse(e.target.value) })
-        }
+        name="favSports"
+        onChange={(e) => {
+          setState((state) => ({
+            ...state,
+            sport: JSON.parse(e.target.value),
+          }));
+        }}
       >
         <option key={"55"}>-- Select Your Favoutite Sport --</option>
         {favSports.map((fs: Sport) => {
@@ -39,10 +53,11 @@ const FavouriteForm = () => {
         })}
       </select>
       <select
-        onChange={(e) =>
-          setState({ ...state, team: JSON.parse(e.target.value) })
-        }
         className="text-gray-500 my-1 rounded"
+        name="favTeam"
+        onChange={(e) =>
+          setState((state) => ({ ...state, team: JSON.parse(e.target.value) }))
+        }
       >
         <option key={"sd"}>-- Select Your Favoutite Team --</option>
         {favTeams.map((ft: Team) => (
