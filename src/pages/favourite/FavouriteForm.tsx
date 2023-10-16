@@ -40,7 +40,7 @@ const FavouriteForm = () => {
         onChange={(e) => {
           setState((state) => ({
             ...state,
-            sport: JSON.parse(e.target.value),
+            sports: [JSON.parse(e.target.value)],
           }));
         }}
       >
@@ -59,7 +59,10 @@ const FavouriteForm = () => {
         className="text-gray-500 my-1 rounded"
         name="favTeam"
         onChange={(e) =>
-          setState((state) => ({ ...state, team: JSON.parse(e.target.value) }))
+          setState((state) => ({
+            ...state,
+            teams: [JSON.parse(e.target.value)],
+          }))
         }
       >
         <option key={"sd"} value={`{}`}>
