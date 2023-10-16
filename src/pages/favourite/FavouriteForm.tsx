@@ -2,26 +2,27 @@ import { useContext, useEffect, useState } from "react";
 import { Sport, Team } from "../../context/types";
 import { PreferencesContext } from "../../context/preferences/context";
 
-const initialState = {
-  sport: {} as Sport,
-  team: {} as Team,
-};
+// const initialState = {
+//   sport: {} as Sport,
+//   team: {} as Team,
+// };
 const FavouriteForm = () => {
-  const { preferencesDispatch } = useContext(PreferencesContext);
-  const [state, setState] = useState(initialState);
+  const { preferencesState, preferencesDispatch } =
+    useContext(PreferencesContext);
+  const [state, setState] = useState(preferencesState.preferences);
 
   useEffect(() => {
     // console.log(state);
     preferencesDispatch({
       type: "FETCH_PREFERENCES_SUCCESS",
-      payload: { sports: [state.sport], teams: [state.team] },
+      payload: { sports: state.sports as Sport[], teams: state.teams },
     });
   }, [state, preferencesDispatch]);
 
   const favSports = JSON.parse(localStorage.getItem("preferences") || "[]")
-    .preferences.sports;
+    .preferences?.sports;
   const favTeams = JSON.parse(localStorage.getItem("preferences") || "[]")
-    .preferences.teams;
+    .preferences?.teams;
 
   // const formChange = async () => {
   //   console.log(state);
@@ -46,7 +47,7 @@ const FavouriteForm = () => {
         <option key={"55"} value={`{}`}>
           -- Select --
         </option>
-        {favSports.map((fs: Sport) => {
+        {favSports?.map((fs: Sport) => {
           return (
             <option value={JSON.stringify(fs)} className="" key={fs.id}>
               {fs.name}
@@ -64,7 +65,7 @@ const FavouriteForm = () => {
         <option key={"sd"} value={`{}`}>
           -- Select --
         </option>
-        {favTeams.map((ft: Team) => (
+        {favTeams?.map((ft: Team) => (
           <option value={JSON.stringify(ft)} key={ft.id}>
             {ft.name}
           </option>

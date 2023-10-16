@@ -10,9 +10,15 @@ const FavouriteCard = () => {
   const navigate = useNavigate();
 
   let articles;
-  if (preferencesState.preferences?.sports)
+  if (
+    preferencesState.preferences.sports.length == 0 &&
+    preferencesState.preferences.teams.length == 0
+  ) {
+    // articles = getFilteredArticles(articleState, preferencesState);
+    articles = articleState.articles;
+  } else {
     articles = getFilteredArticles(articleState, preferencesState);
-  else articles = articleState.articles;
+  }
   return (
     <div className="mx-2 mt-4 flex flex-col gap-4">
       {articles?.slice(0, 5)?.map((article) => {
