@@ -8,6 +8,7 @@ import AppBar from "../layout/AppBar";
 import Logout from "../pages/logout";
 import Preferences from "../pages/preferences";
 import Dashboard from "../pages/dashboard";
+import { ThemeContextProvider } from "../context/theme/context";
 
 const router = createBrowserRouter([
   {
@@ -49,11 +50,10 @@ const router = createBrowserRouter([
     path: "/password_reset",
     element: (
       <ProtectedRoute>
-        <>
+        <ThemeContextProvider>
           <AppBar />
-
           <PasswordChange />
-        </>
+        </ThemeContextProvider>
       </ProtectedRoute>
     ),
   },
