@@ -20,8 +20,8 @@ const ArticleCard = (props: { article: Article }) => {
     <div className="transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-105 duration-200">
       <div
         className={`${
-          theme === "dark" ? "bg-gray-900" : null
-        } 0 bg-white rounded-lg mb-4 shadow-md`}
+          theme === "dark"
+        } dark:bg-gray-900 0 bg-white rounded-lg mb-4 shadow-md`}
       >
         <div className="flex flex-wrap flex-row-reverse sm:flex-row sm:flex-nowrap justify-between items-center">
           <section className="w-full sm:w-2/3 mr-2 pl-4">

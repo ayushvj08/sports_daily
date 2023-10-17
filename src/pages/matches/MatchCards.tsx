@@ -34,9 +34,7 @@ const MatchCards = () => {
         return match.isRunning ? (
           <div
             key={match.id}
-            className={`${
-              theme === "dark" ? "bg-gray-900" : null
-            } w-72 bg-white rounded-lg shadow-md p-4 mr-4 mb-6 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-110 duration-200`}
+            className={`${theme} dark:bg-gray-900 w-72 bg-white rounded-lg shadow-md p-4 mr-4 mb-6 transition ease-in-out delay-50  hover:-translate-y-1 hover:scale-110 duration-200`}
           >
             <div className="text-xl font-bold mb-2">{match.sportName}</div>
             <div> {match.location}</div>
