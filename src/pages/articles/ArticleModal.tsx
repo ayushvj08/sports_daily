@@ -1,7 +1,8 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { fetchArticleById } from "../../context/articles/action";
 import { Dialog, Transition } from "@headlessui/react";
 import { useNavigate, useParams } from "react-router-dom";
+import { ThemeContext } from "../../context/theme/context";
 type Team = {
   id: number;
   name: string;
@@ -33,6 +34,7 @@ const formattedDate = (date: string) => {
 const ArticleModal = () => {
   const navigate = useNavigate();
   const { articleId } = useParams();
+  const { theme } = useContext(ThemeContext);
 
   const [isOpen, setIsOpen] = useState(true);
   const [article, setArticle] = useState<Article>();
@@ -76,7 +78,9 @@ const ArticleModal = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-4 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel
+                  className={`${theme} w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-4 text-left align-middle shadow-xl transition-all`}
+                >
                   {!article ? (
                     <>
                       <Dialog.Title
@@ -135,7 +139,7 @@ const ArticleModal = () => {
                           </i>
                         </div>
                         <div className="mt-2">
-                          <i className="text-sm  text-gray-600">
+                          <i className="text-sm  text-gray-500">
                             {formattedDate(article ? article.date : "")}
                           </i>
                         </div>
@@ -150,7 +154,10 @@ const ArticleModal = () => {
                       <div className="mt-3 text-right">
                         <button
                           type="button"
-                          className="bg-gray-200 px-2 py-1 text-lg font-semibold hover:bg-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          className={`${
+                            theme === "dark" ? "dark:hover:bg-gray-950" : null
+                          }  bg-gray-200 px-2 py-1 text-lg font-semibold hover:bg-gray-300 
+                          focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
                           onClick={closeModal}
                         >
                           Close

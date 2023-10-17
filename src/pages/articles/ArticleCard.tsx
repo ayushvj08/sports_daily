@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { Article } from "../../context/types";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/theme/context";
 
 const formattedDate = (date: string) => {
   const options = {
@@ -12,16 +14,24 @@ const formattedDate = (date: string) => {
 };
 
 const ArticleCard = (props: { article: Article }) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <div className="transition ease-in-out delay-75  hover:-translate-y-1 hover:scale-105 duration-200">
-      <div className="bg-white rounded-lg mb-4 shadow-md">
+      <div
+        className={`${
+          theme === "dark" ? "bg-gray-900" : null
+        } 0 bg-white rounded-lg mb-4 shadow-md`}
+      >
         <div className="flex flex-wrap flex-row-reverse sm:flex-row sm:flex-nowrap justify-between items-center">
           <section className="w-full sm:w-2/3 mr-2 pl-4">
             <p className="text-2xl mb-3">{props.article.title}</p>
             <p className="text-lg mb-1">{props.article.sport.name}</p>
             <p className="mb-2">{props.article.summary}</p>
             <Link
-              className="font-semibold text-lg p-1 bg-gray-200  rounded-sm"
+              className={`${
+                theme === "dark" ? "bg-gray-950" : null
+              } font-semibold text-lg p-1 bg-gray-200 rounded-sm`}
               to={`articles/${props.article.id}`}
             >
               Read More

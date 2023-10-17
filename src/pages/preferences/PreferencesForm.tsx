@@ -8,10 +8,12 @@ import {
 import { PreferencesContext } from "../../context/preferences/context";
 import { Sport, Team } from "../../context/types";
 import { fetchSports } from "../../context/articles/action";
+import { ThemeContext } from "../../context/theme/context";
 
 const PreferencesForm = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
+  const { theme } = useContext(ThemeContext);
 
   const { preferencesState, preferencesDispatch } =
     useContext(PreferencesContext);
@@ -72,7 +74,9 @@ const PreferencesForm = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-3xl  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel
+                  className={`${theme} w-full max-w-3xl  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all`}
+                >
                   <Dialog.Title
                     as="h3"
                     className="text-2xl text-center mb-4 font-semibold leading-6"
