@@ -23,8 +23,15 @@ function classNames(...classes: string[]) {
 const AppBar = () => {
   const { theme, switchTheme } = useContext(ThemeContext);
 
-  const toggleTheme = () =>
-    theme === "light" ? switchTheme("dark") : switchTheme("light");
+  const toggleTheme = () => {
+    if (theme === "light") {
+      switchTheme("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      switchTheme("light");
+      localStorage.setItem("theme", "light");
+    }
+  };
 
   return (
     <>

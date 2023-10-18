@@ -75,7 +75,7 @@ const PreferencesForm = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel
-                  className={`${theme} w-full max-w-3xl  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all`}
+                  className={`${theme} dark:bg-gray-900 w-full max-w-3xl  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all`}
                 >
                   <Dialog.Title
                     as="h3"
@@ -173,7 +173,7 @@ const PreferencesForm = () => {
                           })
                         )}
                       </div>
-                      <div className="mt-4 text-left">
+                      <div className="mt-4 text-center my-1">
                         <button
                           type="submit"
                           className="inline-flex justify-center  border border-transparent bg-blue-600 px-2 py-1  text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"

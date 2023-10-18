@@ -12,7 +12,10 @@ export const ThemeContext = createContext<ThemeContextProps>({
 export const ThemeContextProvider: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const [theme, switchTheme] = useState("light");
+  const preferredTheme = localStorage.getItem("theme");
+  const [theme, switchTheme] = useState(
+    preferredTheme ? preferredTheme : "light"
+  );
   const valueToShare = { theme, switchTheme };
 
   return (
