@@ -154,9 +154,7 @@ const ArticleModal = () => {
                       <div className="mt-3 text-right">
                         <button
                           type="button"
-                          className={`${
-                            theme === "dark" ? "dark:hover:bg-gray-950" : null
-                          }  bg-gray-200 px-2 py-1 text-lg font-semibold hover:bg-gray-300 
+                          className={`${theme} dark:hover:bg-gray-950 bg-gray-200 px-2 py-1 text-lg font-semibold hover:bg-gray-300 
                           focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`}
                           onClick={closeModal}
                         >

@@ -2,17 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { Sport, Team } from "../../context/types";
 import { PreferencesContext } from "../../context/preferences/context";
 
-// const initialState = {
-//   sport: {} as Sport,
-//   team: {} as Team,
-// };
 const FavouriteForm = () => {
   const { preferencesState, preferencesDispatch } =
     useContext(PreferencesContext);
   const [state, setState] = useState(preferencesState.preferences);
 
   useEffect(() => {
-    // console.log(state);
     preferencesDispatch({
       type: "FETCH_PREFERENCES_SUCCESS",
       payload: { sports: state.sports as Sport[], teams: state.teams },
