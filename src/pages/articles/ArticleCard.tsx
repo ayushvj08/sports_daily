@@ -30,14 +30,14 @@ const ArticleCard = (props: { article: Article }) => {
               className={`${
                 theme === "dark" ? "bg-gray-950" : null
               } font-semibold text-lg p-1 bg-gray-200 rounded-sm`}
-              to={`articles/${props.article.id}`}
+              to={`${props.article.id}`}
             >
               Read More
             </Link>
             <p className="text-md mt-1">{formattedDate(props.article.date)}</p>
           </section>
           <section className="sm:flex-end w-full sm:w-1/3">
-            <Link className="font-semibold" to={`articles/${props.article.id}`}>
+            <Link className="font-semibold" to={`${props.article.id}`}>
               <img
                 className="max-h-56 max-w-48 sm:rounded-r-lg"
                 width={500}

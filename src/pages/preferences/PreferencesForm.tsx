@@ -34,7 +34,7 @@ const PreferencesForm = () => {
   };
   const closeModal = () => {
     setIsOpen(false);
-    navigate("../../");
+    navigate("../");
   };
   const [availableSports, setSports] = useState<Sport[]>();
   const [availableTeams, setTeams] = useState<Team[]>();

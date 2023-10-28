@@ -1,19 +1,21 @@
-import AppBar from "../../layout/AppBar";
-import { PreferencesContextProvider } from "../../context/preferences/context";
 import { ArticleContextProvider } from "../../context/articles/context";
-import Articles from "../articles";
+import { PreferencesContextProvider } from "../../context/preferences/context";
 import { ThemeContextProvider } from "../../context/theme/context";
+import AppBar from "../../layout/AppBar";
 
 const Dashboard: React.FC = () => {
   return (
-    <ThemeContextProvider>
-      <ArticleContextProvider>
-        <PreferencesContextProvider>
-          <AppBar />
-          <Articles />
-        </PreferencesContextProvider>
-      </ArticleContextProvider>
-    </ThemeContextProvider>
+    <>
+      <ThemeContextProvider>
+        <ArticleContextProvider>
+          <PreferencesContextProvider>
+            <AppBar />
+            {/* <Articles /> */}
+            {/* <Outlet /> */}
+          </PreferencesContextProvider>
+        </ArticleContextProvider>
+      </ThemeContextProvider>
+    </>
   );
 };
 export default Dashboard;

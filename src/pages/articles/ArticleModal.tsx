@@ -43,7 +43,7 @@ const ArticleModal = () => {
   }, [articleId]);
   const closeModal = () => {
     setIsOpen(false);
-    navigate("../../", { replace: true });
+    navigate("../", { replace: true });
   };
 
   const handleModalOpen = async (id: string) => {

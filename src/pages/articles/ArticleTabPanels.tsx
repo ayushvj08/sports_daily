@@ -11,7 +11,7 @@ import ArticleCard from "./ArticleCard";
 import { ArticleContext } from "../../context/articles/context";
 import { PreferencesContext } from "../../context/preferences/context";
 
-const ArticleContainer = () => {
+const ArticleTabPanels = () => {
   const { articleState } = useContext(ArticleContext);
   const { preferencesState } = useContext(PreferencesContext);
   const [sports, setSports] = useState<Sport[]>([]);
@@ -62,4 +62,4 @@ const ArticleContainer = () => {
     </div>
   );
 };
-export default ArticleContainer;
+export default ArticleTabPanels;

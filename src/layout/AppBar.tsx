@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { ThemeContext } from "../context/theme/context";
 
 const navigation = [
-  { name: "Dashboard", href: "/home", current: true },
+  { name: "Dashboard", href: "/home/articles", current: true },
   { name: "Team", href: "#", current: false },
 ];
 
@@ -35,7 +35,10 @@ const AppBar = () => {
 
   return (
     <>
-      <Disclosure as="nav" className={`${theme} dark:bg-gray-900 bg-gray-400`}>
+      <Disclosure
+        as="nav"
+        className={`${theme} green green:bg-red-900 bg-gray-400`}
+      >
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -71,7 +74,7 @@ const AppBar = () => {
                           to={item.href}
                           className={classNames(
                             item.current
-                              ? "bg-gray-400 "
+                              ? ` ${theme} dark:bg-gray-900 bg-gray-400 `
                               : "text-gray-200 hover:bg-gray-500 ",
                             "rounded-md px-3 py-2 text-sm font-medium"
                           )}
@@ -133,7 +136,7 @@ const AppBar = () => {
                           {({ active }) =>
                             localStorage.getItem("authToken") ? (
                               <Link
-                                to={"/home/articles/preferences"}
+                                to={"articles/preferences"}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-500"
@@ -150,7 +153,7 @@ const AppBar = () => {
                           {({ active }) =>
                             localStorage.getItem("authToken") ? (
                               <Link
-                                to={"/password_reset"}
+                                to={"change_password"}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-500"
