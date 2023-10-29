@@ -12,7 +12,9 @@ export const ArticleContainer = () => {
 
   useEffect(() => {
     fetchArticles(articleDispatch);
-    fetchPreferences(preferencesDispatch);
+    localStorage.getItem("authToken")
+      ? fetchPreferences(preferencesDispatch)
+      : null;
   }, [articleDispatch, preferencesDispatch]);
 
   return (
