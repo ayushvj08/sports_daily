@@ -24,6 +24,7 @@ export const fetchPreferences = async (preferencesDispatch: React.Dispatch<Actio
       });
       localStorage.setItem("preferences", JSON.stringify(responseData))
     }
+    if(responseData.errors[0] === "Invalid auth token") return localStorage.clear()
     if(responseData.errors)
     {   
       console.log(responseData.errors)
