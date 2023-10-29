@@ -13,7 +13,6 @@ export const ArticleContainer = () => {
   useEffect(() => {
     fetchArticles(articleDispatch);
     fetchPreferences(preferencesDispatch);
-    console.log("ok");
   }, [articleDispatch, preferencesDispatch]);
 
   return (

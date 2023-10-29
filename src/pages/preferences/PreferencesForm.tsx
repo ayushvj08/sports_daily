@@ -84,111 +84,117 @@ const PreferencesForm = () => {
                     My Preferences
                   </Dialog.Title>
                   <section>
-                    <hr />
                     {/* <div className="mt-4 h-[300px] overflow-y-auto"> */}
-
-                    <p className="text-xl font-semibold my-2">Sports</p>
-                    <form onSubmit={handleSubmit}>
-                      <div className="flex flex-wrap gap-6 items-center mb-2">
-                        {preferencesState.isLoading ? (
-                          <div>Loading...</div>
-                        ) : (
-                          availableSports?.map((sport) => {
-                            return (
-                              <div key={sport.id}>
-                                <input
-                                  id={`${sport.id}-${sport.name}`}
-                                  name={sport.name}
-                                  checked={preferencesState.preferences.sports.some(
-                                    (e) => e.id === sport.id
-                                  )}
-                                  // {...() =>
-                                  //   `${
-                                  //     state.preferences.sports.includes(
-                                  //       sport.id
-                                  //     )
-                                  //       ? "checked"
-                                  //       : undefined
-                                  //   }`}
-                                  onChange={() => {
-                                    preferencesDispatch({
-                                      type: "UPDATE_SPORT_PREFERENCES",
-                                      payload: { sport },
-                                    });
-                                    // handleInputChange(
-                                    //   "UPDATE_SPORT_PREFERENCES",
-                                    //   sport.id
-                                    // );
-                                  }}
-                                  type="checkbox"
-                                />
-                                <label
-                                  className="mx-1"
-                                  htmlFor={`${sport.id}-${sport.name}`}
-                                >
-                                  {sport.name}
-                                </label>
-                              </div>
-                            );
-                          })
-                        )}
-                      </div>
-
-                      <br />
-                      <p className="text-xl font-semibold mb-2">Teams</p>
-                      <div className="flex flex-wrap gap-4 items-center">
-                        {preferencesState.isLoading ? (
-                          <div>Loading...</div>
-                        ) : (
-                          availableTeams?.map((team) => {
-                            return (
-                              <div key={team.id}>
-                                <input
-                                  id={`${team.id}-${team.name}`}
-                                  name={team.name}
-                                  checked={preferencesState.preferences.teams.some(
-                                    (e) => e.id === team.id
-                                  )}
-                                  onChange={
-                                    () =>
+                    <div className="p-4">
+                      <p className="text-xl font-semibold my-2">
+                        Favourite Sports
+                      </p>
+                      <hr className="my-1" />
+                      <form onSubmit={handleSubmit}>
+                        <div className="flex flex-wrap gap-6 items-center p-2 mb-2">
+                          {preferencesState.isLoading ? (
+                            <div>Loading...</div>
+                          ) : (
+                            availableSports?.map((sport) => {
+                              return (
+                                <div key={sport.id}>
+                                  <input
+                                    id={`${sport.id}-${sport.name}`}
+                                    name={sport.name}
+                                    checked={preferencesState.preferences.sports.some(
+                                      (e) => e.id === sport.id
+                                    )}
+                                    // {...() =>
+                                    //   `${
+                                    //     state.preferences.sports.includes(
+                                    //       sport.id
+                                    //     )
+                                    //       ? "checked"
+                                    //       : undefined
+                                    //   }`}
+                                    onChange={() => {
                                       preferencesDispatch({
-                                        type: "UPDATE_TEAM_PREFERENCES",
-                                        payload: { team },
-                                      })
-                                    // handleInputChange(
-                                    //   "UPDATE_TEAM_PREFERENCES",
-                                    //   team.id
-                                    // )
-                                  }
-                                  type="checkbox"
-                                />
-                                <label
-                                  className="mx-1"
-                                  htmlFor={`${team.id}-${team.name}`}
-                                >
-                                  {team.name}
-                                </label>
-                              </div>
-                            );
-                          })
-                        )}
-                      </div>
-                      <div className="mt-4 text-center my-1">
-                        <button
-                          type="submit"
-                          className="inline-flex justify-center  border border-transparent bg-blue-600 px-2 py-1  text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        >
-                          Update
-                        </button>
-                        <button
-                          onClick={closeModal}
-                          type="submit"
-                          className="inline-flex justify-center  border border-transparent bg-gray-500 px-2 py-1 ml-2 text-sm font-medium text-white hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </form>
+                                        type: "UPDATE_SPORT_PREFERENCES",
+                                        payload: { sport },
+                                      });
+                                      // handleInputChange(
+                                      //   "UPDATE_SPORT_PREFERENCES",
+                                      //   sport.id
+                                      // );
+                                    }}
+                                    type="checkbox"
+                                  />
+                                  <label
+                                    className="mx-1"
+                                    htmlFor={`${sport.id}-${sport.name}`}
+                                  >
+                                    {sport.name}
+                                  </label>
+                                </div>
+                              );
+                            })
+                          )}
+                        </div>
+
+                        <br />
+                        <p className="text-xl font-semibold p-2 mb-2">
+                          Favourite Teams
+                        </p>
+                        <hr className="my-2" />
+                        <div className="flex flex-wrap gap-4 items-center p-2">
+                          {preferencesState.isLoading ? (
+                            <div>Loading...</div>
+                          ) : (
+                            availableTeams?.map((team) => {
+                              return (
+                                <div key={team.id}>
+                                  <input
+                                    id={`${team.id}-${team.name}`}
+                                    name={team.name}
+                                    checked={preferencesState.preferences.teams.some(
+                                      (e) => e.id === team.id
+                                    )}
+                                    onChange={
+                                      () =>
+                                        preferencesDispatch({
+                                          type: "UPDATE_TEAM_PREFERENCES",
+                                          payload: { team },
+                                        })
+                                      // handleInputChange(
+                                      //   "UPDATE_TEAM_PREFERENCES",
+                                      //   team.id
+                                      // )
+                                    }
+                                    type="checkbox"
+                                  />
+                                  <label
+                                    className="mx-1"
+                                    htmlFor={`${team.id}-${team.name}`}
+                                  >
+                                    {team.name}
+                                  </label>
+                                </div>
+                              );
+                            })
+                          )}
+                        </div>
+                        <div className="mt-4 text-center my-1">
+                          <button
+                            type="submit"
+                            className="inline-flex justify-center  border border-transparent bg-blue-600 px-2 py-1  text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          >
+                            Update
+                          </button>
+                          <button
+                            onClick={closeModal}
+                            type="submit"
+                            className="inline-flex justify-center  border border-transparent bg-gray-500 px-2 py-1 ml-2 text-sm font-medium text-white hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    </div>
                     {/* </div> */}
                   </section>
                 </Dialog.Panel>

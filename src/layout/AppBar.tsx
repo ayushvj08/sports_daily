@@ -59,7 +59,8 @@ const AppBar = () => {
                   <div className="flex flex-shrink-0 items-center">
                     <img
                       className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                      src="/favicon.ico"
+                      // src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                       alt="Your Company"
                     />
                   </div>
@@ -82,6 +83,12 @@ const AppBar = () => {
                       ))}
                     </div>
                   </div>
+                  <Link
+                    to={"/home/articles"}
+                    className={`pr-8 mx-auto font-serif text-3xl font-semibold cursor-pointer`}
+                  >
+                    Sports Daily
+                  </Link>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                   {/* Theme Switcher */}
