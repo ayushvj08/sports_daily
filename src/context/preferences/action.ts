@@ -24,6 +24,11 @@ export const fetchPreferences = async (preferencesDispatch: React.Dispatch<Actio
       });
       localStorage.setItem("preferences", JSON.stringify(responseData))
     }
+    if(responseData.errors)
+    {   
+      console.log(responseData.errors)
+      throw new Error(responseData.errors)
+    }
 
   } catch (error) {
     console.log(error);

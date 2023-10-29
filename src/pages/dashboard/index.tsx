@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
             <AppBar />
             {/* <Articles /> */}
             {/* <Outlet /> */}
-          </PreferencesContextProvider>
+          </PreferencesContextProvider>{" "}
         </ArticleContextProvider>
       </ThemeContextProvider>
     </>

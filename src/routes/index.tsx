@@ -7,7 +7,7 @@ import ArticleModal from "../pages/articles/ArticleModal";
 import Logout from "../pages/logout";
 import Preferences from "../pages/preferences";
 import Dashboard from "../pages/dashboard";
-import Articles from "../pages/articles";
+import { ArticleContainer } from "../pages/articles/ArticleContainer";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "articles",
-        element: <Articles />,
+        element: <ArticleContainer />,
         children: [
           // { index: true, element: <Articles /> },
           {

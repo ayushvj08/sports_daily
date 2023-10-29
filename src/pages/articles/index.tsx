@@ -1,22 +1,26 @@
-import { useContext, useEffect } from "react";
-import { fetchArticles } from "../../context/articles/action";
-import { ArticleContext } from "../../context/articles/context";
+import {
+  useContext,
+  // useEffect, Suspense
+} from "react";
+// import { fetchArticles } from "../../context/articles/action";
+// import { ArticleContext } from "../../context/articles/context";
 import Favourite from "../favourite";
 import MatchCards from "../matches/MatchCards";
-import { fetchPreferences } from "../../context/preferences/action";
-import { PreferencesContext } from "../../context/preferences/context";
+// import { fetchPreferences } from "../../context/preferences/action";
+// import { PreferencesContext } from "../../context/preferences/context";
 import ArticleTabPanels from "./ArticleTabPanels";
 import { ThemeContext } from "../../context/theme/context";
 import { Outlet } from "react-router-dom";
+// import ErrorBoundary from "../../components/ErrorBoundary";
 
 const Articles: React.FC = () => {
-  const { articleDispatch } = useContext(ArticleContext);
-  const { preferencesDispatch } = useContext(PreferencesContext);
+  // const { articleDispatch } = useContext(ArticleContext);
+  // const { preferencesDispatch } = useContext(PreferencesContext);
   const { theme } = useContext(ThemeContext);
-  useEffect(() => {
-    fetchArticles(articleDispatch);
-    fetchPreferences(preferencesDispatch);
-  }, [articleDispatch, preferencesDispatch]);
+  // useEffect(() => {
+  //   fetchArticles(articleDispatch);
+  //   fetchPreferences(preferencesDispatch);
+  // }, [articleDispatch, preferencesDispatch]);
 
   return (
     <>
