@@ -61,7 +61,7 @@ const AppBar = () => {
                       className="h-8 w-auto"
                       src="/favicon.ico"
                       // src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                      alt="Your Company"
+                      alt="Sports Daily Logo"
                     />
                   </div>
                   <div className="hidden sm:ml-6 sm:block">

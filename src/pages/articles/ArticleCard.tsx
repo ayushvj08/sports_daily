@@ -28,11 +28,12 @@ const ArticleCard = (props: { article: Article }) => {
             <p className="mb-2">{props.article.summary}</p>
             <Link
               className={`${
-                theme === "dark" ? "bg-gray-950" : null
+                theme === "dark" ? "bg-gray-700" : null
               } font-semibold text-lg p-1 bg-gray-200 rounded-sm`}
               to={`${props.article.id}`}
+              aria-label="Read Article..."
             >
-              Read More
+              Read Article...
             </Link>
             <p className="text-md mt-1">{formattedDate(props.article.date)}</p>
           </section>
@@ -42,6 +43,8 @@ const ArticleCard = (props: { article: Article }) => {
                 className="max-h-56 max-w-48 sm:rounded-r-lg"
                 width={500}
                 src={props.article.thumbnail}
+                alt="thumbnail-image"
+                aria-label="Read more about this ..."
               />
             </Link>
           </section>

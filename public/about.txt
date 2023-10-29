@@ -3,4 +3,4 @@ This favicon was generated using the following font:
 - Font Title: Volkhov
 - Font Author: http://scripts.sil.org/OFL
 - Font Source: http://fonts.gstatic.com/s/volkhov/v17/SlGQmQieoJcKemNeQTIOhHxzcD0.ttf
-- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL)
