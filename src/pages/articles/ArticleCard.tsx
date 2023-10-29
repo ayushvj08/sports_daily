@@ -41,7 +41,9 @@ const ArticleCard = (props: { article: Article }) => {
             <Link className="font-semibold" to={`${props.article.id}`}>
               <img
                 className="max-h-56 max-w-48 w-full sm:rounded-r-lg"
-                // width={500} use Image CDN for resizing
+                width={500}
+                height={500}
+                // use Image CDN for resizing
                 src={props.article.thumbnail.slice(0, -4) + "500"}
                 alt="thumbnail-image"
                 aria-label="Read more about this ..."
