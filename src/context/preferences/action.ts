@@ -41,7 +41,7 @@ export const fetchPreferences = async (preferencesDispatch: React.Dispatch<Actio
   }
 };
 
-export const updatePreferences = async (preferencesDispatch: React.Dispatch<Actions>, formBody: { preferences: Preferences }) => {
+export const updatePreferences = async (preferencesDispatch: React.Dispatch<Actions>,  preferences: Preferences ) => {
   const token = localStorage.getItem("authToken")
   try {
     const response = await fetch(`${API_ENDPOINT}/user/preferences`, {
@@ -50,9 +50,10 @@ export const updatePreferences = async (preferencesDispatch: React.Dispatch<Acti
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify(formBody),
+      body: JSON.stringify({preferences}),
     });
     const data = await response.json();
+    if(!response.ok) throw Error("Failed Network Call")
     preferencesDispatch({ type: "UPDATE_PREFERENCES_SUCCESS", payload: data.preferences });
     localStorage.setItem("preferences", JSON.stringify(data))
 

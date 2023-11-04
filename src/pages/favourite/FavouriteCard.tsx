@@ -33,7 +33,7 @@ const FavouriteCard = () => {
             <p className="text-gray-500 pl-3">{article.summary}</p>
             <div className="flex items-center justify-center">
               <button
-                onClick={() => navigate(`articles/${article.id}`)}
+                onClick={() => navigate(`${article.id}`)}
                 className="bg-gray-800 my-3 py-1 rounded w-11/12 text-white"
               >
                 Read More

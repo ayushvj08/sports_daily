@@ -39,12 +39,16 @@ const FavouriteForm = () => {
           }));
         }}
       >
-        <option key={"55"} value={`{}`}>
+        <option key={"sport"} value={`{}`}>
           -- Select --
         </option>
         {favSports?.map((fs: Sport) => {
           return (
-            <option value={JSON.stringify(fs)} className="" key={fs.id}>
+            <option
+              value={JSON.stringify(fs)}
+              className=""
+              key={"sport-" + fs.id}
+            >
               {fs.name}
             </option>
           );
@@ -60,11 +64,11 @@ const FavouriteForm = () => {
           }))
         }
       >
-        <option key={"sd"} value={`{}`}>
+        <option key={"team"} value={`{}`}>
           -- Select --
         </option>
         {favTeams?.map((ft: Team) => (
-          <option value={JSON.stringify(ft)} key={ft.id}>
+          <option value={JSON.stringify(ft)} key={"team-" + ft.id}>
             {ft.name}
           </option>
         ))}

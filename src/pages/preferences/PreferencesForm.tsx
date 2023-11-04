@@ -1,208 +1,160 @@
-import { Fragment, useContext, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { useNavigate } from "react-router-dom";
-import {
-  fetchTeams,
-  updatePreferences,
-} from "../../context/preferences/action";
+import { useContext, useState } from "react";
+import { Dialog } from "@headlessui/react";
+import { updatePreferences } from "../../context/preferences/action";
 import { PreferencesContext } from "../../context/preferences/context";
 import { Sport, Team } from "../../context/types";
-import { fetchSports } from "../../context/articles/action";
-import { ThemeContext } from "../../context/theme/context";
 
-const PreferencesForm = () => {
-  const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(true);
-  const { theme } = useContext(ThemeContext);
-
+const PreferencesForm = (props: {
+  closeModal: () => void;
+  availableSports: Sport[];
+  availableTeams: Team[];
+}) => {
   const { preferencesState, preferencesDispatch } =
     useContext(PreferencesContext);
-  // const handleInputChange = (
-  //   type: "UPDATE_SPORT_PREFERENCES" | "UPDATE_TEAM_PREFERENCES",
-  //   id: number
-  // ) => preferencesDispatch({ type, payload: { id } });
+
+  const [formState, setFormState] = useState(preferencesState.preferences);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
   ) => {
     event.preventDefault();
-    const response = await updatePreferences(
-      preferencesDispatch,
-      preferencesState
-    );
-    if (response.ok) closeModal();
+    const response = await updatePreferences(preferencesDispatch, formState);
+    if (response.ok) props.closeModal();
   };
-  const closeModal = () => {
-    setIsOpen(false);
-    navigate("../");
-  };
-  const [availableSports, setSports] = useState<Sport[]>();
-  const [availableTeams, setTeams] = useState<Team[]>();
-  useEffect(() => {
-    getFormFields();
-  }, []);
-  const getFormFields = async () => {
-    let response = await fetchSports();
-    if (response.ok) setSports(response.data.sports);
-    response = await fetchTeams();
-    if (response.ok) setTeams(response.data);
-  };
+
   return (
     <>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
+      <Dialog.Title
+        as="h3"
+        className="text-2xl text-center mb-4 font-semibold leading-6"
+      >
+        My Preferences
+      </Dialog.Title>
+      <section>
+        {/* <div className="mt-4 h-[300px] overflow-y-auto"> */}
+        <div className="p-4">
+          <p className="text-xl font-semibold my-2">Favourite Sports</p>
+          <hr className="my-1" />
+          <form onSubmit={handleSubmit}>
+            <div className="grid sm:grid-cols-4 grid-wrap gap-4 items-center p-2 mb-2">
+              {preferencesState.isLoading ? (
+                <div>Loading...</div>
+              ) : (
+                props.availableSports?.map((sport) => {
+                  return (
+                    <div key={sport.id}>
+                      <input
+                        id={`sport-${sport.id}`}
+                        value={JSON.stringify(sport)}
+                        name={sport.name}
+                        checked={formState.sports.some(
+                          (e) => e.id === sport.id
+                        )}
+                        onChange={(element) => {
+                          console.log(
+                            element.target.checked,
+                            JSON.parse(element.target.value).id
+                          );
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel
-                  className={`${theme} dark:bg-gray-900 w-full max-w-3xl  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all`}
-                >
-                  <Dialog.Title
-                    as="h3"
-                    className="text-2xl text-center mb-4 font-semibold leading-6"
-                  >
-                    My Preferences
-                  </Dialog.Title>
-                  <section>
-                    {/* <div className="mt-4 h-[300px] overflow-y-auto"> */}
-                    <div className="p-4">
-                      <p className="text-xl font-semibold my-2">
-                        Favourite Sports
-                      </p>
-                      <hr className="my-1" />
-                      <form onSubmit={handleSubmit}>
-                        <div className="flex flex-wrap gap-6 items-center p-2 mb-2">
-                          {preferencesState.isLoading ? (
-                            <div>Loading...</div>
-                          ) : (
-                            availableSports?.map((sport) => {
-                              return (
-                                <div key={sport.id}>
-                                  <input
-                                    id={`${sport.id}-${sport.name}`}
-                                    name={sport.name}
-                                    checked={preferencesState.preferences.sports.some(
-                                      (e) => e.id === sport.id
-                                    )}
-                                    // {...() =>
-                                    //   `${
-                                    //     state.preferences.sports.includes(
-                                    //       sport.id
-                                    //     )
-                                    //       ? "checked"
-                                    //       : undefined
-                                    //   }`}
-                                    onChange={() => {
-                                      preferencesDispatch({
-                                        type: "UPDATE_SPORT_PREFERENCES",
-                                        payload: { sport },
-                                      });
-                                      // handleInputChange(
-                                      //   "UPDATE_SPORT_PREFERENCES",
-                                      //   sport.id
-                                      // );
-                                    }}
-                                    type="checkbox"
-                                  />
-                                  <label
-                                    className="mx-1"
-                                    htmlFor={`${sport.id}-${sport.name}`}
-                                  >
-                                    {sport.name}
-                                  </label>
-                                </div>
-                              );
-                            })
-                          )}
-                        </div>
-
-                        <br />
-                        <p className="text-xl font-semibold p-2 mb-2">
-                          Favourite Teams
-                        </p>
-                        <hr className="my-2" />
-                        <div className="flex flex-wrap gap-4 items-center p-2">
-                          {preferencesState.isLoading ? (
-                            <div>Loading...</div>
-                          ) : (
-                            availableTeams?.map((team) => {
-                              return (
-                                <div key={team.id}>
-                                  <input
-                                    id={`${team.id}-${team.name}`}
-                                    name={team.name}
-                                    checked={preferencesState.preferences.teams.some(
-                                      (e) => e.id === team.id
-                                    )}
-                                    onChange={
-                                      () =>
-                                        preferencesDispatch({
-                                          type: "UPDATE_TEAM_PREFERENCES",
-                                          payload: { team },
-                                        })
-                                      // handleInputChange(
-                                      //   "UPDATE_TEAM_PREFERENCES",
-                                      //   team.id
-                                      // )
-                                    }
-                                    type="checkbox"
-                                  />
-                                  <label
-                                    className="mx-1"
-                                    htmlFor={`${team.id}-${team.name}`}
-                                  >
-                                    {team.name}
-                                  </label>
-                                </div>
-                              );
-                            })
-                          )}
-                        </div>
-                        <div className="mt-4 text-center my-1">
-                          <button
-                            type="submit"
-                            className="inline-flex justify-center  border border-transparent bg-blue-600 px-2 py-1  text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                          >
-                            Update
-                          </button>
-                          <button
-                            onClick={closeModal}
-                            type="submit"
-                            className="inline-flex justify-center  border border-transparent bg-gray-500 px-2 py-1 ml-2 text-sm font-medium text-white hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </form>
+                          setFormState({
+                            sports: !element.target.checked
+                              ? [
+                                  ...formState.sports.filter(
+                                    (e) =>
+                                      e.id !==
+                                      JSON.parse(element.target.value).id
+                                  ),
+                                ]
+                              : [
+                                  ...formState.sports,
+                                  JSON.parse(element.target.value),
+                                ],
+                            teams: [...formState.teams],
+                          });
+                          // preferencesDispatch({
+                          //   type: "UPDATE_SPORT_PREFERENCES",
+                          //   payload: { sport },
+                          // });
+                          console.log(formState);
+                        }}
+                        type="checkbox"
+                      />
+                      <label className="mx-1" htmlFor={`sport-${sport.id}`}>
+                        {sport.name}
+                      </label>
                     </div>
-                    {/* </div> */}
-                  </section>
-                </Dialog.Panel>
-              </Transition.Child>
+                  );
+                })
+              )}
             </div>
-          </div>
-        </Dialog>
-      </Transition>
+
+            <br />
+            <p className="text-xl font-semibold p-2 mb-2">Favourite Teams</p>
+            <hr className="my-2" />
+            <div className="grid sm:grid-cols-4 grid-wrap gap-4 items-center p-2">
+              {preferencesState.isLoading ? (
+                <div>Loading...</div>
+              ) : (
+                props.availableTeams?.map((team) => {
+                  return (
+                    <div key={team.id}>
+                      <input
+                        id={`${team.id}-${team.name}`}
+                        name={team.name}
+                        value={JSON.stringify(team)}
+                        checked={formState.teams.some((e) => e.id === team.id)}
+                        onChange={
+                          (element) =>
+                            setFormState({
+                              sports: [...formState.sports],
+                              teams: !element.target.checked
+                                ? [
+                                    ...formState.teams.filter(
+                                      (e) =>
+                                        e.id !==
+                                        JSON.parse(element.target.value).id
+                                    ),
+                                  ]
+                                : [...formState.teams, team],
+                            })
+
+                          // preferencesDispatch({
+                          //   type: "UPDATE_TEAM_PREFERENCES",
+                          //   payload: { team },
+                          // })
+                        }
+                        type="checkbox"
+                      />
+                      <label
+                        className="mx-1"
+                        htmlFor={`${team.id}-${team.name}`}
+                      >
+                        {team.name}
+                      </label>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+            <div className="mt-4 text-center my-1">
+              <button
+                type="submit"
+                className="inline-flex justify-center  border border-transparent bg-blue-600 px-2 py-1  text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              >
+                Update
+              </button>
+              <button
+                onClick={props.closeModal}
+                type="submit"
+                className="inline-flex justify-center  border border-transparent bg-gray-500 px-2 py-1 ml-2 text-sm font-medium text-white hover:bg-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+        {/* </div> */}
+      </section>
     </>
   );
 };
