@@ -3,6 +3,7 @@ import { fetchArticleById } from "../../context/articles/action";
 import { Dialog, Transition } from "@headlessui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ThemeContext } from "../../context/theme/context";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 type Team = {
   id: number;
   name: string;
@@ -90,9 +91,9 @@ const ArticleModal = () => {
                       <div className="shadow rounded-md p-4  w-full ">
                         <div className="animate-pulse">
                           {/* <div className="rounded-full bg-slate-700 h-10 w-10"></div> */}
-                          <div className="rounded bg-gray-200 h-[200px] w-full"></div>
+                          <div className="rounded bg-gray-200 h-[250px] w-full"></div>
                           <br />
-                          <div className="flex-1 space-y-6 h-[320px] py-1">
+                          <div className="flex-1 space-y-6 h-[300px] py-1">
                             <div className="h-4 bg-gray-300 rounded"></div>
                             <div className="space-y-3">
                               <div className="grid grid-cols-3 gap-4">
@@ -116,41 +117,43 @@ const ArticleModal = () => {
                     </>
                   ) : (
                     <>
-                      <Dialog.Title
-                        as="h3"
-                        className="text-2xl mb-4 font-semibold leading-6"
-                      >
-                        {article?.title}
-                      </Dialog.Title>
-
-                      <div className="mt-2">
-                        <img
-                          className="w-full h-[250px] object-cover rounded-lg"
-                          src={article?.thumbnail}
-                          alt="thumbnail-image"
+                      <div className="flex justify-between">
+                        <Dialog.Title
+                          as="h3"
+                          className="text-2xl mb-4 font-semibold leading-6"
+                        >
+                          {article?.title}
+                        </Dialog.Title>
+                        <XMarkIcon
+                          onClick={closeModal}
+                          className="cursor-pointer h-8 w-8"
+                          aria-hidden="true"
                         />
                       </div>
+                      <img
+                        className="w-full h-[250px] object-cover rounded-lg"
+                        src={article?.thumbnail}
+                        alt="thumbnail-image"
+                      />
                       <section>
-                        <div className="mt-2 text-center">
+                        <div className="my-2 text-center">
                           <i>
                             {article
                               ? `${article.teams[0]?.name} VS ${article.teams[1]?.name}`
                               : null}
                           </i>
                         </div>
-                        <div className="mt-2">
-                          <i className="text-sm  text-gray-500">
-                            {formattedDate(article ? article.date : "")}
-                          </i>
-                        </div>
+                        <i className="text-sm  text-gray-500">
+                          {formattedDate(article ? article.date : "")}
+                        </i>
                         <hr />
-                        <div className="mt-4 h-[300px] overflow-y-auto">
+                        <div className="my-2 h-[300px] overflow-y-auto">
                           <p className="text-xl font-normal ">
                             {article?.content}
                           </p>
                         </div>
                       </section>
-
+                      {/* 
                       <div className="mt-3 text-right">
                         <button
                           type="button"
@@ -160,7 +163,7 @@ const ArticleModal = () => {
                         >
                           Close
                         </button>
-                      </div>
+                      </div> */}
                     </>
                   )}
                 </Dialog.Panel>
